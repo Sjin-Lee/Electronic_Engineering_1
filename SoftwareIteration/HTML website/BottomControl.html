@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style>
+    .arrows {
+      font-size:70px;
+      color:rgba(9,255,0, 0.950);
+    }
+    .speeds{
+      font-size:40px;
+      color:rgba(178, 255, 123, 0.95);
+    }
+    
+    .circularArrows {
+      font-size:80px;
+      color:rgb(21, 21, 107);
+    }
+    td {
+      background-color:rgb(255, 2, 2);
+      border-radius: 20%;
+      box-shadow: 5px 5px #ad5a1e;
+    }
+    td:active {
+      transform: translate(5px,5px);
+      box-shadow: none; 
+    }
+
+    .noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+         -khtml-user-select: none; /* Konqueror HTML */
+           -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome and Opera */
+    }
+    </style>
+  </head>
+  <body class="noselect" align="center" style="background-color:rgb(8, 8, 8)">
+     
+    <h1 style="color: rgb(0, 213, 255);text-align:center;">ShyRobot</h1>
+    <h2 style="color: rgb(9, 255, 0);text-align:center;">Wi-Fi &#128663; Control</h2>
+    
+    <table id="mainTable" style="width:400px;margin:auto;table-layout:fixed" CELLSPACING=12>
+      <tr>
+        <td></td>
+        <td ontouchstart='onTouchStartAndEnd("1")' ontouchend='onTouchStartAndEnd("0")'><span class="arrows" >&#8679;</span></td>
+        <td></td>
+      </tr>
+      
+      <tr>
+        <td ontouchstart='onTouchStartAndEnd("3")' ontouchend='onTouchStartAndEnd("0")'><span class="arrows" >&#8678;</span></td>
+        <td ontouchstart='onTouchStartAndEnd("9")' ontouchend='onTouchStartAndEnd("0")'><span class="arrows"  >&#8855;</span></td>
+        <td ontouchstart='onTouchStartAndEnd("2")' ontouchend='onTouchStartAndEnd("0")'><span class="arrows" >&#8680;</span></td>
+      </tr>
+      
+      <tr>
+        <td></td>
+        <td ontouchstart='onTouchStartAndEnd("-1")' ontouchend='onTouchStartAndEnd("0")'><span class="arrows" >&#8681;</span></td>
+        <td></td>
+      </tr>
+    
+
+    </table>
+
+    <br>
+    <h1 style="color: rgb(210, 46, 255);text-align:center;">Speed Switch</h1>
+
+    <table id="SpeedTable" style="width:400px;margin:auto;table-layout:fixed" CELLSPACING=15>
+      <tr>
+        <td ontouchstart='onTouchStartAndEnd("66")'><span class="speeds">Eco</span></td>
+        <td ontouchstart='onTouchStartAndEnd("77")'><span class="speeds" >Norm</span></td>
+        <td ontouchstart='onTouchStartAndEnd("99")'><span class="speeds" >Sport</span></td>
+      </tr>
+    </table>
+
+    <script>
+      var webSocketUrl = "ws:\/\/" + window.location.hostname + "/ws";
+      var websocket;
+      
+      function initWebSocket() 
+      {
+        websocket = new WebSocket(webSocketUrl);
+        websocket.onopen    = function(event){};
+        websocket.onclose   = function(event){setTimeout(initWebSocket, 2000);};
+        websocket.onmessage = function(event){};
+      }
+      function onTouchStartAndEnd(value) 
+      {
+        websocket.send(value);
+      }
+          
+      window.onload = initWebSocket;
+      document.getElementById("mainTable").addEventListener("touchend", function(event){
+        event.preventDefault()
+      });      
+    </script>
+    
+  </body>
+</html> 
