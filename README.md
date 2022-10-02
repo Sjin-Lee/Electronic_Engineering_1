@@ -82,6 +82,4 @@ References:
 
 https://github.com/un0038998/WiFiCar
 
-
-# To be continued......
-# The report is still on the way.
+# Report Updated
